@@ -17,10 +17,10 @@
             "fetch_width": 6,
             "decode_width": 6,
             "dispatch_width": 6,
-            "execute_width": 4,
+            "execute_width": 6,
             "lq_width": 2,
             "sq_width": 2,
-            "retire_width": 5,
+            "retire_width": 4,
             "mispredict_penalty": 1,
             "scheduler_size": 128,
             "decode_latency": 1,
@@ -155,7 +155,7 @@
         "virtual_prefetch": false,
         "prefetch_activate": "LOAD,PREFETCH",
         "prefetcher": "no",
-        "replacement": "lru"
+        "replacement": "drrip"
     },
 
     "physical_memory": {
