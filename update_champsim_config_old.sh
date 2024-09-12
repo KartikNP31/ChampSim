@@ -15,8 +15,6 @@ update_json() {
         # Replace numeric or boolean values
         if [[ $section == "ooo_cpu" ]]; then
             sed -i "/\"$section\": \[/,/\]/{/$parameter/ s/\"$parameter\": [0-9a-zA-Z.-]*/\"$parameter\": $new_value/}" "$CONFIG_FILE"
-        elif [[ $section == "main" ]]; then
-            sed -i "/\"$parameter\":/ s/\"$parameter\": [0-9a-zA-Z.-]*/\"$parameter\": $new_value/" "$CONFIG_FILE"
         else
             sed -i "/\"$section\": {/,/}/ s/\"$parameter\": [0-9a-zA-Z.-]*/\"$parameter\": $new_value/" "$CONFIG_FILE"
         fi
@@ -24,8 +22,6 @@ update_json() {
         # For string values, add quotes around the new value
         if [[ $section == "ooo_cpu" ]]; then
             sed -i "/\"$section\": \[/,/\]/{/$parameter/ s/\"$parameter\": \".*\"/\"$parameter\": \"$new_value\"/}" "$CONFIG_FILE"
-        elif [[ $section == "main" ]]; then
-            sed -i "/\"$parameter\":/ s/\"$parameter\": \".*\"/\"$parameter\": \"$new_value\"/" "$CONFIG_FILE"
         else
             sed -i "/\"$section\": {/,/}/ s/\"$parameter\": \".*\"/\"$parameter\": \"$new_value\"/" "$CONFIG_FILE"
         fi
@@ -35,7 +31,7 @@ update_json() {
 # Main loop
 while true; do
     # Prompt for user input
-    echo "Enter the section name (e.g., L1I, L1D, L2C, ooo_cpu, main): "
+    echo "Enter the section name (e.g., L1I, L1D, L2C, ooo_cpu): "
     read section
 
     if [[ $section == "ooo_cpu" ]]; then
@@ -47,16 +43,6 @@ while true; do
         read new_value
 
         # Assuming the array index is 0 since there's only one element in the example
-        update_json "$section" "$parameter" "$new_value" 0
-    elif [[ $section == "main" ]]; then
-        # Update main section parameters
-        echo "Enter the parameter name (e.g., executable_name, block_size): "
-        read parameter
-
-        echo "Enter the new value for $parameter: "
-        read new_value
-
-        # Update the JSON file
         update_json "$section" "$parameter" "$new_value" 0
     else
         echo "Enter the parameter name (e.g., sets, ways, latency): "
